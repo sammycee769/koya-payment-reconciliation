@@ -31,7 +31,7 @@ def reconcile(lines):
 
     successful = [event for _, event in latest.values() if event["status"] == "success"]
     # Preserve the input's decimal precision throughout accumulation.
-    amounts = [Decimal(str(event["amount"])) for event in successful]
+    amounts = [Decimal(str(event["amount"]).replace(",", "")) for event in successful]
     with localcontext() as context:
         context.prec = max(
             [28] + [len(amount.as_tuple().digits) + abs(amount.as_tuple().exponent)

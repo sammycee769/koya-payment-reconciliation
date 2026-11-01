@@ -36,6 +36,10 @@ class ReconciliationTests(unittest.TestCase):
         lines = ['{"txn_id":"a","status":"success","amount":12345678901234567890.12,"ts":"2026-01-01T00:00:00Z"}']
         self.assertEqual(reconcile(lines), (1, Decimal("12345678901234567890.12")))
 
+    def test_amount_strings_with_thousands_separators(self):
+        lines = [event("a", "success", "55,707.77", "2026-01-01T00:00:00Z")]
+        self.assertEqual(reconcile(lines), (1, Decimal("55707.77")))
+
 
 if __name__ == "__main__":
     unittest.main()
